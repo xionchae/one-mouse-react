@@ -1,7 +1,9 @@
 // 5-4 state를 사용하는 컴포넌트 만들기
 
 import React, {useState} from 'react';
+import OddEventResult from './OddEventResult';
 
+// 비 구조화 할당 문법을 사용하여 props를 전달받아 사용할 수 있습니다. onemouse 3_5.js 참고
 const Counter = ({ initialValue }) => {
   console.log(initialValue);
   // h2 태그 안에 숫자를 표시하고, + 버튼과 - 버튼을 만들어주세요. 여기 값의 상태가 변경된다고 보면 됨
@@ -20,6 +22,7 @@ const Counter = ({ initialValue }) => {
       <h2>{count}</h2>
       <button onClick={onIncrease}>+</button>
       <button onClick={onDecrease}>-</button>
+      <OddEventResult count={count} />
     </div>
   );
 }
