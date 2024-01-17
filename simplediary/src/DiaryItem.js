@@ -1,4 +1,6 @@
-const DiaryItem = ({ author, content, created_date, emotion, id }) => {
+
+
+const DiaryItem = ({ author, content, created_date, emotion, id, onDelete }) => {
   return (
     <div className="DiaryItem">
       <div className="info">
@@ -9,10 +11,15 @@ const DiaryItem = ({ author, content, created_date, emotion, id }) => {
         <span className="date">{new Date(created_date).toLocaleDateString()}</span>
       </div>
       <div className="content">내용 : {content}</div>
+      <button onClick={() => {
+        if(window.confirm("정말 삭제하시겠습니까?")) {
+          onDelete(id);
+        }
+      }}>삭제</button>
     </div>
   )
 }
-
+ 
 DiaryItem.defaultProps = {
   diary: {},
 }

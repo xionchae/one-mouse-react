@@ -33,10 +33,15 @@ function App() {
     setData([...data, newItem]);
   };
 
+  const onDelete = (tgtId) => {
+    setData(data.filter((item) => item.id !== tgtId));
+
+  }
+
   return (
     <div className="App">
     <DiaryEditor onCreate = {onCreate}/>
-    <DiaryList diaryList = {data}/>
+    <DiaryList diaryList = {data} onDelete={onDelete} />
     </div>
   );
 }
