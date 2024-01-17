@@ -1,25 +1,37 @@
 import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Lifecycle from './Lifecycle';
-
-// const dummyList = [
-//   {
-//     id: 1, author: "xion", content: "오늘은 날씨가 좋아요", emotion: "happy", created_date: new Date().getTime()
-//   },
-//   {
-//     id: 2, author: "louis", content: "오늘은 날씨가 나빠요", emotion: "angry", created_date: new Date().getTime()
-//   },
-//   {
-//     id: 3, author: "tamsa", content: "오늘은 날씨가 그래요", emotion: "soso", created_date: new Date().getTime()
-//   }
-// ]
+// https://jsonplaceholder.typicode.com/comments
 
 function App() {
   const [data, setData] = useState([]);
 
   const dataId = useRef(0);
+
+  const getData = async () => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/comments").then((res) => res.json());
+
+    console.log(res.length);
+
+    const initData = res.slice(0, 10).map((item) => {
+      console.log(dataId.current);
+      return {
+        author: item.email,
+        content: item.body,
+        emotion: Math.floor(Math.random() * 5) + 1,
+        created_date: new Date().getTime(),
+        id: dataId.current += 1
+      }
+    });
+    
+    setData(initData);
+  }
+  
+  useEffect(() => {
+    getData();
+  }, []);
 
   const onCreate = (author, content, emotion) => {
     const created_date = new Date().getTime();
