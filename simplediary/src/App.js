@@ -1,7 +1,7 @@
 import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 
 // const dummyList = [
 //   {
@@ -33,15 +33,22 @@ function App() {
     setData([...data, newItem]);
   };
 
-  const onDelete = (tgtId) => {
+  const onRemove = (tgtId) => {
     setData(data.filter((item) => item.id !== tgtId));
+  }
 
+  const onEdit = (tgtId, newContent) => {
+    setData(
+      data.map((item) => 
+        (item.id === tgtId ? {...item, content: newContent} : item)
+      )
+    );
   }
 
   return (
     <div className="App">
     <DiaryEditor onCreate = {onCreate}/>
-    <DiaryList diaryList = {data} onDelete={onDelete} />
+    <DiaryList diaryList = {data} onRemove={onRemove} onEdit={onEdit} />
     </div>
   );
 }
