@@ -54,11 +54,11 @@ const DiaryEditor = ({onCreate}) => {
 
       <div>
         <select name='emotion' value={state.emotion} onChange={handleChangeState}>
-          <option value='happy'>행복해요</option>
-          <option value='sad'>슬퍼요</option>
-          <option value='angry'>화나요</option>
-          <option value='shy'>부끄러워요</option>
-          <option value='soso'>그저 그래요</option>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option value='4'>4</option>
+          <option value='5'>5</option>
         </select>
       </div>
       <div>
