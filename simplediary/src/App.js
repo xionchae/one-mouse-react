@@ -22,7 +22,7 @@ function App() {
         content: item.body,
         emotion: Math.floor(Math.random() * 5) + 1,
         created_date: new Date().getTime(),
-        id: dataId.current += 1
+        id: dataId.current ++
       }
     });
     
