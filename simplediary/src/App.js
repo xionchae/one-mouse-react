@@ -2,7 +2,8 @@ import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
 import React, {useState, useRef, useEffect, useMemo} from 'react';
-import Lifecycle from './Lifecycle';
+// import Lifecycle from './Lifecycle';
+import OptimizeTest from './OptimizeTest';
 // https://jsonplaceholder.typicode.com/comments
 
 function App() {
@@ -55,9 +56,7 @@ function App() {
     );
   }
 
-  const getDiaryAnalysis = useMemo(
-    () => {
-    console.log("일기 분석 시작");
+  const getDiaryAnalysis = useMemo(() => {
 
     const goodCount = data.filter((item) => item.emotion >= 3).length;
     const badCount = data.filter((item) => item.emotion < 3).length;
@@ -70,7 +69,7 @@ function App() {
 
   return (
     <div className="App">
-    <Lifecycle />
+    <OptimizeTest />
     <DiaryEditor onCreate = {onCreate}/>
     <div>전체 일기 : {data.length}개</div>
     <div>좋은 일기 : {goodCount}개</div>
