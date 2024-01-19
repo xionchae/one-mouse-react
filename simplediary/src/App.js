@@ -24,6 +24,9 @@ const reducer = (state, action) => {  // 상태 변화 일어나기 전에 데�
   }
 }
 
+export const DiarystateContext = React.createContext();
+
+export const DiaryDispatchContext = React.createContext();
 
 function App() {
   // const [data, setData] = useState([]);
@@ -97,15 +100,25 @@ function App() {
 
   const {goodCount, badCount, goodRatio} = getDiaryAnalysis;
 
+  const memoizedDispatches = useMemo(() => {
+    return {onCreate, onRemove, onEdit}
+  },[]) ;
+
   return (
-    <div className="App">
-    <DiaryEditor onCreate = {onCreate}/>
-    <div>전체 일기 : {data.length}개</div>
-    <div>좋은 일기 : {goodCount}개</div>
-    <div>나쁜 일기 : {badCount}개</div>
-    <div>좋은 일기 비율 : {goodRatio}%</div>
-    <DiaryList diaryList = {data} onRemove={onRemove} onEdit={onEdit} />
-    </div>
+    <DiarystateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider value={memoizedDispatches}>
+        {/* <Lifecycle /> */}
+        {/* <OptimizeTest /> */}
+        <div className="App">
+          <DiaryEditor />
+          <div>전체 일기 : {data.length}개</div>
+          <div>좋은 일기 : {goodCount}개</div>
+          <div>나쁜 일기 : {badCount}개</div>
+          <div>좋은 일기 비율 : {goodRatio}%</div>
+          <DiaryList />
+        </div>
+      </DiaryDispatchContext.Provider>
+    </DiarystateContext.Provider>
   );
 }
 

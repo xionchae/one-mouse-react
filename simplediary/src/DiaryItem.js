@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useContext } from 'react';
+import { DiaryDispatchContext } from './App';
 
 const DiaryItem = ({ 
   author,
@@ -6,9 +7,11 @@ const DiaryItem = ({
   created_date,
   emotion,
   id,
-  onRemove,
-  onEdit
+  // onRemove,
+  // onEdit
 }) => {
+
+  const {onRemove, onEdit} = useContext(DiaryDispatchContext);
 
   const [isEdit, setIsEdit] = useState(false);  // 수정모드인지 아닌지를 나타내는 상태
 
