@@ -1,9 +1,9 @@
 import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
-import React, {useState, useRef, useEffect, useMemo} from 'react';
+import React, {useState, useRef, useEffect, useMemo, useCallback} from 'react';
 // import Lifecycle from './Lifecycle';
-import OptimizeTest from './OptimizeTest';
+// import OptimizeTest from './OptimizeTest';
 // https://jsonplaceholder.typicode.com/comments
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
     getData();
   }, []);
 
-  const onCreate = (author, content, emotion) => {
+  const onCreate = useCallback((author, content, emotion) => {
     const created_date = new Date().getTime();
     const newItem = {
       author,
@@ -41,8 +41,8 @@ function App() {
       id: dataId.current
     };
     dataId.current += 1;
-    setData([...data, newItem]);
-  };
+    setData((data) => [...data, newItem]);  // 함수형 업데이트 (최신 상태를 보장, useCallback 사용 시)
+  }, []);
 
   const onRemove = (tgtId) => {
     setData(data.filter((item) => item.id !== tgtId));
@@ -63,13 +63,12 @@ function App() {
     const goodRatio = (goodCount / data.length) * 100;
     return {goodCount, badCount, goodRatio}
     }, [data.length]
-  );
+  ); 
 
   const {goodCount, badCount, goodRatio} = getDiaryAnalysis;
 
   return (
     <div className="App">
-    <OptimizeTest />
     <DiaryEditor onCreate = {onCreate}/>
     <div>전체 일기 : {data.length}개</div>
     <div>좋은 일기 : {goodCount}개</div>
@@ -80,4 +79,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
