@@ -1,6 +1,18 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-const DiaryItem = ({ author, content, created_date, emotion, id, onRemove, onEdit }) => {
+const DiaryItem = ({ 
+  author,
+  content,
+  created_date,
+  emotion,
+  id,
+  onRemove,
+  onEdit
+}) => {
+
+  useEffect(() => {
+    console.log(`${id} 번째 DiaryItem이 렌더링 됨`);
+  });
 
   const [isEdit, setIsEdit] = useState(false);  // 수정모드인지 아닌지를 나타내는 상태
 
@@ -71,4 +83,4 @@ DiaryItem.defaultProps = {
   diary: {},
 }
 
-export default DiaryItem;
+export default React.memo(DiaryItem);

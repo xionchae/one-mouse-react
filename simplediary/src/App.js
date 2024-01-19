@@ -44,17 +44,17 @@ function App() {
     setData((data) => [...data, newItem]);  // 함수형 업데이트 (최신 상태를 보장, useCallback 사용 시)
   }, []);
 
-  const onRemove = (tgtId) => {
-    setData(data.filter((item) => item.id !== tgtId));
-  }
+  const onRemove = useCallback((tgtId) => {
+    setData(data => data.filter((item) => item.id !== tgtId));
+  }, []);
 
-  const onEdit = (tgtId, newContent) => {
-    setData(
+  const onEdit = useCallback((tgtId, newContent) => {
+    setData((data) =>
       data.map((item) => 
         (item.id === tgtId ? {...item, content: newContent} : item)
       )
     );
-  }
+  }, []);
 
   const getDiaryAnalysis = useMemo(() => {
 
