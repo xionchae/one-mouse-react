@@ -10,10 +10,6 @@ const DiaryItem = ({
   onEdit
 }) => {
 
-  useEffect(() => {
-    console.log(`${id} 번째 DiaryItem이 렌더링 됨`);
-  });
-
   const [isEdit, setIsEdit] = useState(false);  // 수정모드인지 아닌지를 나타내는 상태
 
   const toggleIsEdit = () => setIsEdit(!isEdit);
