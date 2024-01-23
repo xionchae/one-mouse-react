@@ -21,7 +21,7 @@ const reducer = (state, action) => {
       newState = [newItem, ...state];
       break;
     case "REMOVE":
-      return state.filter((item) => item.id !== action.payload.id);
+      return state.filter((item) => item.id !== action.data.id);
     case "EDIT":
       return state.map((item) => item.id === action.data.id ? {...action.data} : item);
     default:
@@ -33,8 +33,29 @@ const reducer = (state, action) => {
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
+const dumyData = [
+  {
+    id : 1,
+    emotion : "1", 
+    content : "오늘은 1 행복했다.",
+    date : 1705906214711
+  },
+  {
+    id : 3,
+    emotion : "2", 
+    content : "오늘은 2 행복했다.",
+    date : 1705906214715
+  },
+  {
+    id : 4,
+    emotion : "5", 
+    content : "오늘은 3 행복했다. ",
+    date : 1705906214720
+  },
+];
+
 function App() { 
-  const [data, dispatch] = useReducer(reducer, []);
+  const [data, dispatch] = useReducer(reducer, dumyData);
   const dataId = useRef(0);
 
   // CREATE
@@ -44,8 +65,8 @@ function App() {
       data : {
         id : dataId.current,
         date : new Date(date).getTime(),
-        content : content,
-        emotion : emotion
+        content,
+        emotion
       }
     });
     dataId.current += 1;
@@ -60,11 +81,11 @@ function App() {
   const onEdit = (targetId, date, content, emotion) => {
     dispatch(
       {type : "EDIT", 
-      data : {
-        id : targetId,
-        date : new Date(date).getTime(),
-        content : content,
-        emotion : emotion
+       data : {
+         id : targetId,
+         date : new Date(date).getTime(),
+         content,
+         emotion
       }
     });
   }
@@ -74,7 +95,6 @@ function App() {
       <DiaryDispatchContext.Provider value={{onCreate, onRemove, onEdit}}>
         <BrowserRouter>
           <div className="App">
-            <h2>App.js</h2>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/diary/:id" element={<Diary />} />
