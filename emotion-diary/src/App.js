@@ -50,7 +50,7 @@ const dumyData = [
     id : 4,
     emotion : "5", 
     content : "오늘은 3 행복했다. ",
-    date : 1705906214720
+    date : 1705906214719
   },
 ];
 
@@ -99,7 +99,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/diary/:id" element={<Diary />} />
               <Route path="/new" element={<New />} />
-              <Route path="/edit" element={<Edit />} />
+              <Route path="/edit/:id" element={<Edit />} />
             </Routes>
           </div>
         </BrowserRouter>

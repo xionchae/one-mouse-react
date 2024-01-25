@@ -1,24 +1,33 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { DiaryStateContext } from "../App";
+import DiaryEditor from "../components/DiaryEditor";
 
 const Edit = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get('id');
-  //console.log(`id : ${id}`);
-
+  const [originData, setOriginData] = useState({});
+  const diaryList = useContext(DiaryStateContext);
   const navigate = useNavigate();
+  const { id } = useParams(); //useParams 는 url의 파라미터를 가져올 수 있음, useSearchParams는 url의 쿼리를 가져올 수 있음
 
-  const mode = searchParams.get('mode');
-  //console.log(`mode : ${mode}`);
+  // useEffect는 컴포넌트가 렌더링 될 때마다 특정 작업을 수행하도록 설정할 수 있는 Hook이다.
+  useEffect(() => {
+    if (diaryList.length >= 1) {
+      const targetDiary = diaryList.find((item) => item.id === parseInt(id));
 
+      if (targetDiary) {
+        setOriginData(targetDiary);
+      } else {
+        navigate("/", { replace : true });
+      }
+    }
+  }, [id, diaryList])
+
+  // {originData && <DiaryEditor data={originData} />} originData가 있을 때만 DiaryEditor를 렌더링한다는 뜻
   return (
     <div>
-      <h1>Edit.js</h1>
-      <p>이곳은 Edit 입니다.</p>
-      <button onClick={() => {setSearchParams({who : "xion"})}}>바꾸기 </button>
-      <button onClick={() => {navigate("/home")}}>홈으로 가기</button>
-      <button onClick={() => {navigate(-1)}}>뒤로 가기</button>
+      {originData && <DiaryEditor isEdit={true} originData={originData} />} 
     </div>
-  );
+  ); 
 }
 
 export default Edit;
